@@ -1,54 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import About from './pages/About/About';
+import NotFound from './pages/NotFound/NotFound';
 import './App.css';
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState('');
-
-  // Ajouter une nouvelle tâche
-  const addTodo = () => {
-    if (input.trim() !== '') {
-      setTodos([...todos, { id: Date.now(), text: input, completed: false }]);
-      setInput('');
-    }
-  };
-
-  // Supprimer une tâche
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
-
-  // Marquer une tâche comme complétée
-  const toggleTodo = (id) => {
-    setTodos(todos.map(todo => 
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
-  };
-
   return (
-    <div className="App">
-      <h1>Ma Liste de Tâches</h1>
-      
-      <div className="todo-input">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ajouter une tâche..."
-          onKeyPress={(e) => e.key === 'Enter' && addTodo()}
-        />
-        <button onClick={addTodo}>Ajouter</button>
+    <Router>
+      <div className="App">
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Accueil</Link>
+            </li>
+            <li>
+              <Link to="/about">À propos</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
-      
-      <ul className="todo-list">
-        {todos.map(todo => (
-          <li key={todo.id} className={todo.completed ? 'completed' : ''}>
-            <span onClick={() => toggleTodo(todo.id)}>{todo.text}</span>
-            <button onClick={() => deleteTodo(todo.id)}>Supprimer</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </Router>
   );
 }
 
