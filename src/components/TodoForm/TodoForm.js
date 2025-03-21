@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { TodoContext } from '../../context/TodoContext';
 import './TodoForm.css';
 
-function TodoForm({ onAdd }) {
-  const [input, setInput] = useState('');
+function TodoForm() {
+  const [text, setText] = useState('');
+  const { addTodo } = useContext(TodoContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (input.trim() !== '') {
-      onAdd(input);
-      setInput('');
+    if (text.trim()) {
+      addTodo(text);
+      setText('');
     }
   };
 
   return (
     <form className="todo-form" onSubmit={handleSubmit}>
       <input
+        className="todo-input"
         type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Ajouter une tâche..."
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Ajouter une nouvelle tâche..."
       />
-      <button type="submit">Ajouter</button>
+      <button className="add-btn" type="submit">Ajouter</button>
     </form>
   );
 }

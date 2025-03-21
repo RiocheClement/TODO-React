@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TodoContext } from '../../context/TodoContext';
 import './TodoItem.css';
 
-function TodoItem({ todo, onToggle, onDelete }) {
+function TodoItem({ todo }) {
+  const { toggleTodo, deleteTodo } = useContext(TodoContext);
+
   return (
-    <li className={todo.completed ? 'completed' : ''}>
-      <span onClick={() => onToggle(todo.id)}>{todo.text}</span>
-      <button onClick={() => onDelete(todo.id)}>Supprimer</button>
+    <li className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+      <input
+        type="checkbox"
+        checked={todo.completed}
+        onChange={() => toggleTodo(todo.id)}
+        className="todo-checkbox"
+      />
+      <span className="todo-text">{todo.text}</span>
+      <button
+        onClick={() => deleteTodo(todo.id)}
+        className="delete-btn"
+      >
+        Supprimer
+      </button>
     </li>
   );
 }

@@ -1,0 +1,23 @@
+.home-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+  }
+  
+  .home-header {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  
+  .home-header h1 {
+    font-size: 32px;
+    color: #2c4682;
+  }
+  
+  .home-header p {
+    color: #666;
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
