@@ -4,6 +4,7 @@ export const TodoContext = createContext();
 
 export const TodoProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const addTodo = (text) => {
     setTodos([...todos, { id: Date.now(), text, completed: false }]);
@@ -19,9 +20,24 @@ export const TodoProvider = ({ children }) => {
     ));
   };
 
+  // Filtrer les todos en fonction du terme de recherche
+  const filteredTodos = todos.filter(todo => 
+    todo.text.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <TodoContext.Provider value={{ todos, addTodo, deleteTodo, toggleTodo }}>
+    <TodoContext.Provider value={{ 
+      todos: filteredTodos, 
+      allTodos: todos,
+      addTodo, 
+      deleteTodo, 
+      toggleTodo,
+      searchTerm,
+      setSearchTerm
+    }}>
       {children}
     </TodoContext.Provider>
   );
 };
+
+export default TodoProvider;

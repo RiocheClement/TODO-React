@@ -43,14 +43,40 @@
   
   .theme-btn {
     padding: 8px 16px;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-color);
     border-radius: 4px;
     background-color: var(--bg-element);
+    color: var(--text-primary);
     cursor: pointer;
     transition: all 0.2s;
+    font-weight: 500;
+  }
+  
+  .theme-btn:hover {
+    background-color: var(--bg-hover);
+    border-color: var(--primary-color);
   }
   
   .theme-btn.active {
     background-color: var(--primary-color);
-    color: white;
+    color: blue;
+    border-color: var(--primary-color);
   }
+  
+  /* Pour s'assurer que le texte est toujours visible en thème clair */
+  .theme-btn.active {
+    /* Garantit un texte visible même en thème clair */
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Améliore la visibilité des boutons de thème non sélectionnés */
+  .theme-btn:not(.active) {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ajoute un indicateur visuel pour le thème actuellement sélectionné */
+  .theme-btn.active::after {
+    content: "✓";
+    margin-left: 5px;
+  }
+  

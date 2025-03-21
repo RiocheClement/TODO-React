@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import './Layout.css';
 
 function Layout() {
   const { theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const showSearchBar = location.pathname === '/'; // Afficher seulement sur la page d'accueil
+
+  // Fonction pour gérer la recherche
+  const handleSearch = (searchTerm) => {
+    // Si vous êtes sur la page d'accueil
+    if (location.pathname === '/') {
+      // Utiliser un paramètre de recherche dans l'URL
+      navigate(`/?search=${encodeURIComponent(searchTerm)}`);
+      console.log("Recherche:", searchTerm);
+    }
+  };
 
   return (
     <div className={`app ${theme === 'dark' ? 'dark-theme' : ''}`}>
       <header className="app-header">
         <div className="header-content">
-          <h1 className="app-title">Application TODO Liste</h1>
+          <h1 className="app-title">Application TODOList</h1>
           
           <button 
             className="mobile-menu-toggle"
@@ -44,6 +58,13 @@ function Layout() {
               </li>
             </ul>
           </nav>
+          
+          {/* Ajouter la SearchBar ici, seulement si on est sur la page d'accueil */}
+          {showSearchBar && (
+            <div className="header-search">
+              <SearchBar onSearch={handleSearch} />
+            </div>
+          )}
         </div>
       </header>
       

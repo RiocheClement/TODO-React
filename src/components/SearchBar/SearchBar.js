@@ -1,8 +1,7 @@
-// components/SearchBar/SearchBar.js
 import React, { useState } from 'react';
 import './SearchBar.css';
 
-function SearchBar({ onSearch }) {
+function SearchBar({ onSearch = () => {} }) { // Ajout d'une fonction par défaut
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (e) => {
