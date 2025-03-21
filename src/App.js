@@ -1,32 +1,32 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
+import Statistics from './pages/Statistics/Statistics';
+import Settings from './pages/Settings/Settings';
 import NotFound from './pages/NotFound/NotFound';
+import Layout from './components/Layout/Layout';
+import { TodoProvider } from './context/TodoContext';
+import { ThemeProvider } from './context/ThemeContext';
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Accueil</Link>
-            </li>
-            <li>
-              <Link to="/about">À propos</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </Router>
+    <ThemeProvider>
+      <TodoProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="statistics" element={<Statistics />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </Router>
+      </TodoProvider>
+    </ThemeProvider>
   );
 }
 
